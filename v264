@@ -1,0 +1,11 @@
+#!/bin/bash
+if [ -z "$1" ]; then
+    echo "You must input video file name"
+    exit
+fi
+if [ -f $1 ]; then
+	output="$(echo $1 | sed 's/\.[^.]*$//')"
+	ffmpeg -i $1 -c:a copy -x264-params crf=30 -b:a 64k "$output-264.mp4"
+else
+	echo "File $1 does not exist"
+fi
